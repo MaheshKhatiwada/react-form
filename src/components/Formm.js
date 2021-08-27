@@ -5,22 +5,16 @@ import isDate from "validator/lib/isDate";
 
 import { showErrorMessage } from "../common/messages";
 
-const Form = () => {
+const Formm = () => {
   const [data, setData] = useState({
     name: "",
     dob: "",
     email: "",
-    board: "",
-    college: "",
-    gpa: "",
-    company: "",
-    role: "",
-    years: "",
-    education: [],
-    experience: [],
+    education: [{ board: "", college: "", gpa: "" }],
+    experience: [{ company: "", role: "", years: "" }],
   });
   const [errors, setErrors] = useState("");
-  const { name, dob, email, board, college, gpa, company, role, years } = data;
+  const { name, dob, email,education,experience} = data;
   const handleFormData = (e) => {
     setData({
       ...data,
@@ -28,20 +22,28 @@ const Form = () => {
     });
     setErrors("");
   };
+  const handleFormEducationData=(e,idx)=>{
+    console.log(idx,e.target.name)
+    const values=[...data.education];
+    values[idx][e.target.name]=e.target.value;
+    setData({...data,education:values})
+
+  }
+  const handleFormExperienceData=(e,idx)=>{
+
+    console.log(idx,e.target.name)
+    const values=[...data.experience];
+    values[idx][e.target.name]=e.target.value;
+    setData({...data,experience:values})
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("email is", data.email);
     if (
       isEmpty(name) ||
       isEmpty(dob) ||
-      isEmpty(email) ||
-      isEmpty(board) ||
-      isEmpty(college) ||
-      isEmpty(gpa) ||
-      isEmpty(role) ||
-      isEmpty(years) ||
-      isEmpty(company)
+      isEmpty(email)
+
     ) {
       setErrors("All fields required");
     } else if (!isEmail(email)) {
@@ -54,6 +56,12 @@ const Form = () => {
       console.log("Data is ", data);
     }
   };
+  const handleAddEducation=()=>{
+      setData({...data,education:[...education,{ board: "", college: "", gpa: "" }]})
+  }
+  const handleAddExperience=()=>{
+      setData({...data,experience:[...experience,{ company: "", role: "", years: "" }]})
+  }
   return (
     <div>
       <form onSubmit={handleFormSubmit} noValidate>
@@ -103,23 +111,27 @@ const Form = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>
-                <input
-                  type="text"
-                  name="board"
-                  value={data.board}
-                  onChange={handleFormData}
-                  placeholder="Board"
-                />
-              </td>
-              <td>
+                {data.education.map((eds,idx)=>{
+                    return(
+                        <>
+                        <tr>
+                        <th scope="row"><button className="btn btn-secondary" onClick={handleAddEducation}>Add </button></th>
+                        <td>
+                        <input
+                          type="text"
+                          name="board"
+                          value={eds.board}
+                          onChange={(e)=>handleFormEducationData(e,idx)}
+                          placeholder="Board"
+                        />
+                      </td>
+                      <td>
+
                 <input
                   type="text"
                   name="college"
-                  value={data.college}
-                  onChange={handleFormData}
+                  value={eds.college}
+                  onChange={(e)=>handleFormEducationData(e,idx)}
                   placeholder="College"
                 />
               </td>
@@ -127,12 +139,15 @@ const Form = () => {
                 <input
                   type="number"
                   name="gpa"
-                  value={data.gpa}
-                  onChange={handleFormData}
+                  value={eds.gpa}
+                  onChange={(e)=>handleFormEducationData(e,idx)}
                   placeholder="GPA"
                 />
               </td>
-            </tr>
+              </tr>
+                </>
+                    )
+                })}
           </tbody>
         </table>
         <h6 className="mt-2"> Experience</h6>
@@ -146,23 +161,27 @@ const Form = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>
-                <input
-                  type="text"
-                  name="company"
-                  value={data.company}
-                  onChange={handleFormData}
-                  placeholder="Company"
-                />
-              </td>
-              <td>
+          {data.experience.map((exp,idx)=>{
+                    return(
+                        <>
+                        <tr>
+                        <th scope="row"><button className="btn btn-secondary" onClick={handleAddExperience}>Add </button></th>
+                        <td>
+                        <input
+                          type="text"
+                          name="company"
+                          value={exp.company}
+                          onChange={(e)=>handleFormExperienceData(e,idx)}
+                          placeholder="Company"
+                        />
+                      </td>
+                      <td>
+
                 <input
                   type="text"
                   name="role"
-                  value={data.role}
-                  onChange={handleFormData}
+                  value={exp.role}
+                  onChange={(e)=>handleFormExperienceData(e,idx)}
                   placeholder="Role"
                 />
               </td>
@@ -170,12 +189,15 @@ const Form = () => {
                 <input
                   type="number"
                   name="years"
-                  value={data.years}
-                  onChange={handleFormData}
-                  placeholder="Years"
+                  value={exp.years}
+                  onChange={(e)=>handleFormExperienceData(e,idx)}
+                  placeholder="years"
                 />
               </td>
-            </tr>
+              </tr>
+                </>
+                    )
+                })}
           </tbody>
         </table>
 
@@ -190,4 +212,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Formm;

@@ -1,11 +1,13 @@
 
 import './App.css';
 import Form from './components/Form'
+import Formm from './components/Formm'
+
 
 function App() {
   return (
     <div className="container">
-      <Form/>
+      <Formm/>
     </div>
   );
 }
