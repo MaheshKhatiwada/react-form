@@ -63,15 +63,18 @@ const Formm = () => {
       setData({...data,experience:[...experience,{ company: "", role: "", years: "" }]})
   }
   const handleDeleteEducation=(idx)=>{
-      console.log(idx)
+    //  console.log(idx)
      const values=[...data.education];
      values.splice(idx,1)
-     console.log(values);
-    setData({...data,experience:values})
+    // console.log(values);
+    // console.log(data.education)
+    setData({...data,education:values})
 
   }
-  const handleDeleteExperience=()=>{
-
+  const handleDeleteExperience=(idx)=>{
+    const values=[...data.experience];
+    values.splice(idx,1)
+    setData({...data,experience:values})
   }
   const handleClear=()=>{
       setData({
