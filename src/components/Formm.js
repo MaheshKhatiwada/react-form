@@ -23,7 +23,7 @@ const Formm = () => {
     setErrors("");
   };
   const handleFormEducationData=(e,idx)=>{
-    console.log(idx,e.target.name)
+   // console.log(idx,e.target.name)
     const values=[...data.education];
     values[idx][e.target.name]=e.target.value;
     setData({...data,education:values})
@@ -31,7 +31,7 @@ const Formm = () => {
   }
   const handleFormExperienceData=(e,idx)=>{
 
-    console.log(idx,e.target.name)
+    //console.log(idx,e.target.name)
     const values=[...data.experience];
     values[idx][e.target.name]=e.target.value;
     setData({...data,experience:values})
@@ -61,6 +61,27 @@ const Formm = () => {
   }
   const handleAddExperience=()=>{
       setData({...data,experience:[...experience,{ company: "", role: "", years: "" }]})
+  }
+  const handleDeleteEducation=(idx)=>{
+      console.log(idx)
+     const values=[...data.education];
+     values.splice(idx,1)
+     console.log(values);
+    setData({...data,experience:values})
+
+  }
+  const handleDeleteExperience=()=>{
+
+  }
+  const handleClear=()=>{
+      setData({
+        name: "",
+        dob: "",
+        email: "",
+        education: [{ board: "", college: "", gpa: "" }],
+        experience: [{ company: "", role: "", years: "" }],
+      })
+      setErrors('')
   }
   return (
     <div>
@@ -101,6 +122,7 @@ const Formm = () => {
           />
         </div>
         <h6 className="mt-2"> Education Details</h6>
+        <button className="btn btn-secondary" onClick={handleAddEducation}>Add </button>
         <table className="table">
           <thead>
             <tr>
@@ -114,8 +136,9 @@ const Formm = () => {
                 {data.education.map((eds,idx)=>{
                     return(
                         <>
-                        <tr>
-                        <th scope="row"><button className="btn btn-secondary" onClick={handleAddEducation}>Add </button></th>
+                        <tr key={idx}>
+                        <th scope="row"><button className="btn btn-secondary" onClick={()=>handleDeleteEducation(idx)}>Delete </button></th>
+
                         <td>
                         <input
                           type="text"
@@ -151,6 +174,8 @@ const Formm = () => {
           </tbody>
         </table>
         <h6 className="mt-2"> Experience</h6>
+        <button className="btn btn-secondary" onClick={handleAddExperience}>Add </button>
+
         <table className="table">
           <thead>
             <tr>
@@ -164,8 +189,8 @@ const Formm = () => {
           {data.experience.map((exp,idx)=>{
                     return(
                         <>
-                        <tr>
-                        <th scope="row"><button className="btn btn-secondary" onClick={handleAddExperience}>Add </button></th>
+                        <tr key={idx}>
+                        <th scope="row"><button className="btn btn-secondary" onClick={handleDeleteExperience}>Delete </button></th>
                         <td>
                         <input
                           type="text"
@@ -202,9 +227,11 @@ const Formm = () => {
         </table>
 
         <div className="mt-2">
-          <button type="submit" className="btn btn-primary">
-            {" "}
+          <button type="submit" className="btn btn-primary" onClick={handleFormSubmit}>
             Submit
+          </button>
+          <button  className="btn btn-primary px-6" onClick={handleClear}>
+            Clear
           </button>
         </div>
       </form>
