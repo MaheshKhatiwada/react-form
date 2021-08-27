@@ -10,6 +10,7 @@ const Formm = () => {
     name: "",
     dob: "",
     email: "",
+    gender:"",
     education: [{ board: "", college: "", gpa: "" }],
     experience: [{ company: "", role: "", years: "" }],
   });
@@ -129,6 +130,8 @@ const Formm = () => {
             type="radio"
             name="gender"
             id="male"
+            value="male"
+            onChange={handleFormData}
           />
           <label className="form-check-label">Male</label>
         </div>
@@ -138,8 +141,21 @@ const Formm = () => {
             type="radio"
             name="gender"
             id="female"
+            value="female"
+            onChange={handleFormData}
           />
           <label className="form-check-label">Female</label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="gender"
+            id="others"
+            value="others"
+            onChange={handleFormData}
+          />
+          <label className="form-check-label">Others</label>
         </div>
 
 
