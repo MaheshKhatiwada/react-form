@@ -10,8 +10,8 @@ const Formm = () => {
     name: "",
     dob: "",
     email: "",
-    gender:"",
-    language:[],
+    gender: "",
+    language: [],
     education: [{ board: "", college: "", gpa: "" }],
     experience: [{ company: "", role: "", years: "" }],
   });
@@ -24,18 +24,17 @@ const Formm = () => {
     });
     setErrors("");
   };
-  const handleCheckbox=(e)=>{
+  const handleCheckbox = (e) => {
     //console.log(e.target.checked);
-    let checkedLanguage=[...data.language];
-    if(e.target.checked){
-      checkedLanguage.push(e.target.value)
-    }else{
-      const index=checkedLanguage.indexOf(e.target.value)
-      checkedLanguage.splice(index,1)
+    let checkedLanguage = [...data.language];
+    if (e.target.checked) {
+      checkedLanguage.push(e.target.value);
+    } else {
+      const index = checkedLanguage.indexOf(e.target.value);
+      checkedLanguage.splice(index, 1);
     }
-    setData({...data,language:checkedLanguage})
-
-  }
+    setData({ ...data, language: checkedLanguage });
+  };
 
   const handleFormEducationData = (e, idx) => {
     // console.log(idx,e.target.name)
@@ -64,7 +63,7 @@ const Formm = () => {
       console.log("Data is ", data);
     }
   };
-  const handleAddEducation = () => {
+  const handleAddEducation = (a) => {
     setData({
       ...data,
       education: [...education, { board: "", college: "", gpa: "" }],
@@ -94,6 +93,8 @@ const Formm = () => {
       name: "",
       dob: "",
       email: "",
+      // gender: "",
+      // language: [],
       education: [{ board: "", college: "", gpa: "" }],
       experience: [{ company: "", role: "", years: "" }],
     });
@@ -169,7 +170,6 @@ const Formm = () => {
           <label className="form-check-label">Others</label>
         </div>
 
-
         <h6 className="mt-2">Languages</h6>
         <div className="form-check">
           <input
@@ -179,9 +179,7 @@ const Formm = () => {
             value="nepali"
             onChange={handleCheckbox}
           />
-          <label className="form-check-label">
-            Nepali
-          </label>
+          <label className="form-check-label">Nepali</label>
         </div>
         <div className="form-check">
           <input
@@ -191,9 +189,7 @@ const Formm = () => {
             value="hindi"
             onChange={handleCheckbox}
           />
-          <label className="form-check-label">
-            Hindi
-          </label>
+          <label className="form-check-label">Hindi</label>
         </div>
         <div className="form-check">
           <input
@@ -203,9 +199,7 @@ const Formm = () => {
             value="chinese"
             onChange={handleCheckbox}
           />
-          <label className="form-check-label">
-            Chinese
-          </label>
+          <label className="form-check-label">Chinese</label>
         </div>
         <div className="form-check">
           <input
@@ -215,13 +209,11 @@ const Formm = () => {
             value="english"
             onChange={handleCheckbox}
           />
-          <label className="form-check-label">
-            English
-          </label>
+          <label className="form-check-label">English</label>
         </div>
         <h6 className="mt-2"> Education Details</h6>
-        <button className="btn btn-secondary" onClick={handleAddEducation}>
-          Add{" "}
+        <button  type="button" className="btn btn-secondary" onClick={handleAddEducation}>
+          Add
         </button>
         <table className="table">
           <thead>
@@ -236,13 +228,14 @@ const Formm = () => {
             {data.education.map((eds, idx) => {
               return (
                 <Fragment key={idx}>
-                  <tr >
+                  <tr>
                     <th scope="row">
                       <button
+                        type="button"
                         className="btn btn-secondary"
                         onClick={() => handleDeleteEducation(idx)}
                       >
-                        Delete{" "}
+                        Delete
                       </button>
                     </th>
 
@@ -280,8 +273,8 @@ const Formm = () => {
           </tbody>
         </table>
         <h6 className="mt-2"> Experience</h6>
-        <button className="btn btn-secondary" onClick={handleAddExperience}>
-          Add{" "}
+        <button  type="button" className="btn btn-secondary" onClick={handleAddExperience}>
+          Add
         </button>
 
         <table className="table">
@@ -300,6 +293,7 @@ const Formm = () => {
                   <tr>
                     <th scope="row">
                       <button
+                        type="button"
                         className="btn btn-secondary"
                         onClick={handleDeleteExperience}
                       >
@@ -344,11 +338,10 @@ const Formm = () => {
           <button
             type="submit"
             className="btn btn-primary"
-            onClick={handleFormSubmit}
           >
             Submit
           </button>
-          <button className="btn btn-primary px-6" onClick={handleClear}>
+          <button type="button" className="btn btn-primary px-6" onClick={handleClear}>
             Clear
           </button>
         </div>
