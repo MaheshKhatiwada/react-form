@@ -11,6 +11,7 @@ const Formm = () => {
     dob: "",
     email: "",
     gender:"",
+    language:[],
     education: [{ board: "", college: "", gpa: "" }],
     experience: [{ company: "", role: "", years: "" }],
   });
@@ -23,6 +24,19 @@ const Formm = () => {
     });
     setErrors("");
   };
+  const handleCheckbox=(e)=>{
+    //console.log(e.target.checked);
+    let checkedLanguage=[...data.language];
+    if(e.target.checked){
+      checkedLanguage.push(e.target.value)
+    }else{
+      const index=checkedLanguage.indexOf(e.target.value)
+      checkedLanguage.splice(index,1)
+    }
+    setData({...data,language:checkedLanguage})
+
+  }
+
   const handleFormEducationData = (e, idx) => {
     // console.log(idx,e.target.name)
     const values = [...data.education];
@@ -86,7 +100,7 @@ const Formm = () => {
     setErrors("");
   };
   return (
-    <div>
+    <div className="container">
       <form onSubmit={handleFormSubmit} noValidate>
         <h1 className="text-center">Register</h1>
         {errors && showErrorMessage(errors)}
@@ -98,7 +112,6 @@ const Formm = () => {
             name="name"
             value={data.name}
             onChange={handleFormData}
-            required
           />
         </div>
         <div className="mt-3">
@@ -109,7 +122,6 @@ const Formm = () => {
             name="email"
             value={data.email}
             onChange={handleFormData}
-            required
           />
         </div>
         <div className="mt-3">
@@ -120,7 +132,6 @@ const Formm = () => {
             name="dob"
             value={data.dob}
             onChange={handleFormData}
-            required
           />
         </div>
         <h6 className="mt-2"> Education Details</h6>
@@ -164,7 +175,9 @@ const Formm = () => {
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
+            name="language"
+            value="nepali"
+            onChange={handleCheckbox}
           />
           <label className="form-check-label">
             Nepali
@@ -174,17 +187,21 @@ const Formm = () => {
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
+            name="language"
+            value="hindi"
+            onChange={handleCheckbox}
           />
           <label className="form-check-label">
-            Indian
+            Hindi
           </label>
         </div>
         <div className="form-check">
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
+            name="language"
+            value="chinese"
+            onChange={handleCheckbox}
           />
           <label className="form-check-label">
             Chinese
@@ -194,7 +211,9 @@ const Formm = () => {
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
+            name="language"
+            value="english"
+            onChange={handleCheckbox}
           />
           <label className="form-check-label">
             English
