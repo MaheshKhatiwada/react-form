@@ -12,11 +12,17 @@ const Formm = () => {
     email: "",
     gender: "",
     language: [],
+    languages: [
+      { name: "nepali", check: false },
+      { name: "english", check: false },
+      { name: "hindi", check: false },
+      { name: "chinese", check: false },
+    ],
     education: [{ board: "", college: "", gpa: "" }],
     experience: [{ company: "", role: "", years: "" }],
   });
   const [errors, setErrors] = useState("");
-  const { name, dob, email, education, experience } = data;
+  const { name, dob, email, education, experience, gender } = data;
   const handleFormData = (e) => {
     setData({
       ...data,
@@ -24,18 +30,21 @@ const Formm = () => {
     });
     setErrors("");
   };
-  const handleCheckbox = (e) => {
-    //console.log(e.target.checked);
-    let checkedLanguage = [...data.language];
-    if (e.target.checked) {
-      checkedLanguage.push(e.target.value);
-    } else {
-      const index = checkedLanguage.indexOf(e.target.value);
-      checkedLanguage.splice(index, 1);
-    }
-    setData({ ...data, language: checkedLanguage });
-  };
 
+
+  const handleCheckboxes = (e,idx) => {
+    let checkedLanguage = [...data.languages];
+    console.log(idx)
+
+    if(e.target.checked){
+      checkedLanguage[idx].check=true;
+      setData({...data,languages:checkedLanguage})
+    }
+    else{
+      checkedLanguage[idx].check=false;
+      setData({...data,languages:checkedLanguage})
+    };
+  };
   const handleFormEducationData = (e, idx) => {
     // console.log(idx,e.target.name)
     const values = [...data.education];
@@ -51,7 +60,7 @@ const Formm = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (isEmpty(name) || isEmpty(dob) || isEmpty(email)) {
+    if (isEmpty(name) || isEmpty(dob) || isEmpty(email) || isEmpty(gender)) {
       setErrors("All fields required");
     } else if (!isEmail(email)) {
       setErrors("Email must be valid");
@@ -170,49 +179,27 @@ const Formm = () => {
           <label className="form-check-label">Others</label>
         </div>
 
+
         <h6 className="mt-2">Languages</h6>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="language"
-            value="nepali"
-            onChange={handleCheckbox}
-          />
-          <label className="form-check-label">Nepali</label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="language"
-            value="hindi"
-            onChange={handleCheckbox}
-          />
-          <label className="form-check-label">Hindi</label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="language"
-            value="chinese"
-            onChange={handleCheckbox}
-          />
-          <label className="form-check-label">Chinese</label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="language"
-            value="english"
-            onChange={handleCheckbox}
-          />
-          <label className="form-check-label">English</label>
-        </div>
+
+        {data.languages.map((language, idx) => (
+          <div className="form-check" key={idx}>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name={language.name}
+              value={language.name}
+              onChange={(e)=>handleCheckboxes(e,idx)}
+            />
+            <label className="form-check-label">{language.name}</label>
+          </div>
+        ))}
         <h6 className="mt-2"> Education Details</h6>
-        <button  type="button" className="btn btn-secondary" onClick={handleAddEducation}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddEducation}
+        >
           Add
         </button>
         <table className="table">
@@ -273,7 +260,11 @@ const Formm = () => {
           </tbody>
         </table>
         <h6 className="mt-2"> Experience</h6>
-        <button  type="button" className="btn btn-secondary" onClick={handleAddExperience}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleAddExperience}
+        >
           Add
         </button>
 
@@ -335,13 +326,14 @@ const Formm = () => {
         </table>
 
         <div className="mt-2">
-          <button
-            type="submit"
-            className="btn btn-primary"
-          >
+          <button type="submit" className="btn btn-primary">
             Submit
           </button>
-          <button type="button" className="btn btn-primary px-6" onClick={handleClear}>
+          <button
+            type="button"
+            className="btn btn-primary px-6"
+            onClick={handleClear}
+          >
             Clear
           </button>
         </div>
